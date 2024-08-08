@@ -1,0 +1,38 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
+# .tfvars files are managed as part of configuration and so should be included in
+# version control.
+#
+# example.tfvars
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore Terraform provider binaries
+terraform_1.5.0_linux_amd64
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/*/windows_amd64/terraform-provider-aws_*.exe
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.57.0/windows_amd64/terraform-provider-aws_v5.57.0_x5.exe
+# Ignore node modules
+/node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore compiled binary files
+*.exe
+
+# Ignore temporary files
+*.tmp

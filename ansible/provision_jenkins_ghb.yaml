@@ -1,0 +1,40 @@
+---
+- name: Install Jenkins on Ubuntu
+  hosts: all
+  become: true
+  vars:
+    java_packages:
+      - openjdk-17-jdk
+    jenkins_packages:
+      - jenkins
+  tasks:
+    - name: Add Jenkins GPG key
+      ansible.builtin.apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
+        validate_certs: yes
+
+
+    - name: Add Jenkins repository
+      ansible.builtin.apt_repository:
+        repo: deb http://pkg.jenkins.io/debian-stable binary/
+        state: present
+        filename: jenkins
+        update_cache: yes
+
+
+    - name: Install Java
+      ansible.builtin.apt:
+        name: "{{ java_packages }}"
+        state: present
+
+    - name: Install Jenkins
+      ansible.builtin.apt:
+        name: "{{ jenkins_packages }}"
+        state: present
+
+    - name: Start Jenkins service
+      ansible.builtin.service:
+        name: jenkins
+        state: started
+        enabled: yes

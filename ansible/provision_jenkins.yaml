@@ -1,0 +1,20 @@
+---
+- name: Jenkins configuratiln
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Java
+      dnf:
+        name: java-17-openjdk
+        state: present
+
+    - name: Install Jenkins
+      dnf:
+        name: jenkins
+        state: present
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
