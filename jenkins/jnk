@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}", '.')
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     // Log in to DockerHub
-                    withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS_ID}", url: '') {
+                    withDockerRegistry(credentialsId: "${DOCKER_CREDENTIALS_ID}") {
                         // Push the Docker image to DockerHub
                         docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}").push("${DOCKER_TAG}")
                     }
@@ -55,16 +55,24 @@ pipeline {
             steps {
                 script {
                     // Deploy the Docker image to the web server
-                    sshagent(['userver-key-01']) {
+                    sshagent(credentials: ['userver-key-01']) {
                         sh """
-                        ssh ${WEB_SERVER_USER}@${WEB_SERVER_IP} <<EOF
-                        docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker stop your-container-name || true
-                        docker rm your-container-name || true
-                        docker run -d --name your-container-name -p 5000:5000 ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        EOF
+                            ssh ${WEB_SERVER_USER}@${WEB_SERVER_IP} 
+                            docker pull ${DOCKER_IMAGE}:${DOCKER_TAG}
+                            docker run -d --name your-container-name -p 5000:5000 ${DOCKER_IMAGE}:${DOCKER_TAG}
+                            
                         """
                     }
+                        // docker stop your-container-name || true
+                        // docker rm your-container-name || true
+                        
+                        /// <<EOF
+                        ///    if ! command -v docker &> /dev/null
+                        ///    then
+                        ///        echo "Docker could not be found, please install Docker."
+                        ///        exit 1
+                        ///    fi
+                        /// EOF
                 }
             }
         }

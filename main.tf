@@ -11,10 +11,10 @@ terraform {
 # Configure the files
 provider "aws" {
   # authentifation files
-  #shared_config_files      = ["C:/Users/tf_user/.aws/conf"]
-  #shared_credentials_files = ["C:/Users/tf_user/.aws/creds"]
-  shared_config_files      = ["/mnt/c/Users/tf_user/.aws/conf"]
-  shared_credentials_files = ["/mnt/c/Users/tf_user/.aws/creds"]
+  shared_config_files      = ["C:/Users/tf_user/.aws/conf"]
+  shared_credentials_files = ["C:/Users/tf_user/.aws/creds"]
+  ###shared_config_files      = ["/mnt/c/Users/tf_user/.aws/conf"]
+  ###shared_credentials_files = ["/mnt/c/Users/tf_user/.aws/creds"]
   profile                  = "customprofile"
   # common configuration
   region                   = "eu-north-1"
